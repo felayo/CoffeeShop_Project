@@ -22,6 +22,9 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
+# Credit to Auth0 Python API: Authorization Documentation 
+# https://auth0.com/docs/quickstart/backend/python/01-authorization
+
 # Auth Header
 
 '''
