@@ -33,7 +33,7 @@ CORS(app)
 @app.route('/drinks')
 def get_drinks():
     try:
-        drinks = Drink.query.order_by(Drink.id).all()
+        drinks = Drink.query.all()
 
         drink = [drink.short() for drink in drinks]
 
@@ -124,14 +124,14 @@ def post_drinks(token):
 
 @app.route('/drinks/<id>', methods=['PATCH'])
 @requires_auth('patch:drinks')
-def edit_drinks(token, id):
+def edit_drink(token, id):
 
     body = request.get_json()
 
     title = body.get('title')
     recipe = body.get('recipe')
 
-    drink = Drink.query.get('id')
+    drink = Drink.query.get(id)
 
     if drink is None:
         abort(404)
@@ -141,7 +141,7 @@ def edit_drinks(token, id):
             drink.title = title
 
         if recipe:
-            drink.recipe = json.dumps(recipe)
+            drink.recipe = recipe
 
         drink.update()
 
@@ -170,7 +170,7 @@ def edit_drinks(token, id):
 @requires_auth('delete:drinks')
 def delete_drink(token, id):
 
-    drink = Drink.query.get('id')
+    drink = Drink.query.get(id)
 
     if drink is None:
         abort(404)
