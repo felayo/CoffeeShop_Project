@@ -232,11 +232,11 @@ def not_found(error):
     error handler should conform to general task above
 '''
 
+@app.errorhandler(AuthError)
+def unauthorized(ex):
+    return jsonify({
+        "success": False,
+        "error": ex.status_code,
+        "message": ex.error
+    }), 403
 
-@app.errorhandler(401)
-def auth_error(error):
-    return (
-        jsonify({"success": False, "error": 401,
-                 "message": "server error"}),
-        401,
-    )
